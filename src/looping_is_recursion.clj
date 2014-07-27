@@ -34,7 +34,7 @@
     (cond
      (empty? the-seq) nil
      (p (first the-seq)) index
-     :else (recur p (rest the-seq) (inc index)))))            ;=> nil
+     :else (recur p (rest the-seq) (inc index)))))
 
 (defn avg [a-seq]
   (loop [the-seq a-seq
@@ -56,24 +56,20 @@
       (recur (rest the-seq)(toggle the-set (first the-seq))))))
 
 (defn fast-fibo [n]
-;  (loop [m n
-;         acc 0
-;         m-1 (- n 1)
-;         acc-1 0]
-;    (cond
-;     (= m 0) 0
-;     (= m 1) 1
-;     :else (recur (dec m)(+ acc acc-1)(dec m-1))))
- )
-
-;(fast-fibo 0) ;=> 0
-;(fast-fibo 1) ;=> 1
-;(fast-fibo 2) ;=> 1
-;(fast-fibo 3) ;=> 2
-;(fast-fibo 4) ;=> 3
-;(fast-fibo 5) ;=> 5
-;(fast-fibo 6) ;=> 8
+  (loop [fst 1
+           snd 0
+           iter 0]
+    (cond
+     (= n iter) snd
+     :else (recur (+ fst snd) fst (inc iter))
+ )))
 
 (defn cut-at-repetition [a-seq]
-  [":("])
-
+  (loop [the-set #{}
+           the-vec []
+           the-seq a-seq]
+    (cond
+     (empty? the-seq) the-vec
+     ((complement nil?)(get the-set (first the-seq))) the-vec
+     :else (recur (conj the-set (first the-seq))(conj the-vec (first the-seq))(rest the-seq))
+    )))
